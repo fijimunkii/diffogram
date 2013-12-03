@@ -12,6 +12,8 @@ function getAdiff(owner, repo, id) {
   });
 }
 
+var numDiffs = 0;
+
 function getDiffs(link) {
   var diffs = [];
 
@@ -20,22 +22,37 @@ function getDiffs(link) {
       diffs.push(data[i].diff_url);
     }
 
-    var stripped = diffs[0].slice(19,diffs[0].length);
-    var owner = stripped.slice(0, stripped.indexOf('/'));
-    stripped = stripped.slice(stripped.indexOf('/')+1, stripped.length);
-    var repo = stripped.slice(0, stripped.indexOf('/'));
+    if (diffs.length === 0) {
+      $('#terminal').html('');
+      $('#terminal').typist('prompt');
+      $('#terminal').typist('wait', 2000);
+      $('#terminal').typist('type', 'no pending pull requests..')
 
-    for (var i=1; i<=diffs.length; i++) {
-      getAdiff(owner, repo, i).done(function(data) {
-        while (data.data.indexOf('\n') !== -1) {
-          var currentLine = data.data.slice(0, data.data.indexOf('\n'));
-          $('#terminal').typist('type', currentLine);
-          $('#terminal').typist('prompt');
-          $('#terminal').typist('wait', 2000);
-          data.data = data.data.slice(data.data.indexOf('\n')+1, data.data.length);
-        }
-      });
-    }
+    } else {
+
+      var diffsToShow = diffs.length - numDiffs;
+      var startingDiff = diffs.length - diffsToShow + 1;
+
+      numDiffs = diffs.length;
+
+      var stripped = diffs[0].slice(19,diffs[0].length);
+      var owner = stripped.slice(0, stripped.indexOf('/'));
+      stripped = stripped.slice(stripped.indexOf('/')+1, stripped.length);
+      var repo = stripped.slice(0, stripped.indexOf('/'));
+
+      for (var i=1; i<=diffs.length; i++) {
+        getAdiff(owner, repo, i).done(function(data) {
+          while (data.data.indexOf('\n') !== -1) {
+            var currentLine = data.data.slice(0, data.data.indexOf('\n'));
+            $('#terminal').typist('type', currentLine);
+            $('#terminal').typist('prompt');
+            $('#terminal').typist('wait', 2000);
+            data.data = data.data.slice(data.data.indexOf('\n')+1, data.data.length);
+          }
+        });
+      }
+
+    } // /else
 
   }); // /getPulls.done()
 
@@ -62,27 +79,6 @@ $(function() {
     prettyPrint();
   }, 1000);
 
-  // setInterval(function() {
-  //   var termVal = $('#terminal').val();
-  //   if (termVal.length > 1000) {
-  //     termVal = termVal.slice(1000, termVal.length);
-  //     $('#terminal').val(termVal);
-  //   }
-  // }, 60000);
-
-  // setInterval(function() {
-  //   var $term = $('#terminal');
-  //   var termChildren = $term[0].children;
-
-  //   termChildren = termChildren.slice(termChildren.length-20, termChildren.length);
-
-  //   $term.html('');
-
-  //   for (var i=0; i<termChildren.length; i++) {
-  //     $term[0].appendChild(termChildren[i]);
-  //   }
-  // }, 60000);
-
   //TODO make the clearing function only remove lines offscreen
 
   setInterval(function() {
@@ -91,8 +87,13 @@ $(function() {
 
   $('#repo-form').on('submit', function(e) {
     e.preventDefault();
+
     var repo = $('#repo-input').val();
-    getDiffs(repo);
+
+    setInterval(function() {
+      getDiffs(repo);
+    }, 15000);
+
     $('#repo-form').fadeOut(2000);
   });
 
