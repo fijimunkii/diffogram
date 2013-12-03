@@ -26,7 +26,7 @@ function getDiffs(link) {
       $('#terminal').html('');
       $('#terminal').typist('prompt');
       $('#terminal').typist('wait', 2000);
-      $('#terminal').typist('type', 'no pending pull requests..')
+      $('#terminal').typist('type', 'no pending pull requests..');
 
     } else {
 
@@ -40,7 +40,7 @@ function getDiffs(link) {
       stripped = stripped.slice(stripped.indexOf('/')+1, stripped.length);
       var repo = stripped.slice(0, stripped.indexOf('/'));
 
-      for (var i=1; i<=diffs.length; i++) {
+      for (var i=startingDiff; i<=diffs.length; i++) {
         getAdiff(owner, repo, i).done(function(data) {
           while (data.data.indexOf('\n') !== -1) {
             var currentLine = data.data.slice(0, data.data.indexOf('\n'));
