@@ -46,7 +46,7 @@ function getDiffs(link) {
             var currentLine = data.data.slice(0, data.data.indexOf('\n'));
             $('#terminal').typist('type', currentLine);
             $('#terminal').typist('prompt');
-            $('#terminal').typist('wait', 2000);
+            $('#terminal').typist('wait', 1000);
             data.data = data.data.slice(data.data.indexOf('\n')+1, data.data.length);
           }
         });
