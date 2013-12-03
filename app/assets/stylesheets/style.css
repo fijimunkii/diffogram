@@ -1,0 +1,19 @@
+@font-face {
+   font-family: "Delicious";
+   src: url("Glass_TTY_VT220.ttf");
+}
+
+* {
+	background-color: #000;
+	color: rgb(89, 209,	33);
+	font-family: "Delicious";
+	font-size: 40px;
+}
+
+#terminal {
+	height: 100%;
+}
+
+p {
+	color: #fff;
+}

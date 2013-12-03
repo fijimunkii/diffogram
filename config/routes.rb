@@ -1,7 +1,7 @@
 Diffogram::Application.routes.draw do
   root to: 'welcome#index'
 
-  get "welcome/index"
+  get '/get/:owner/:repo/:id', to: 'diff#get'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

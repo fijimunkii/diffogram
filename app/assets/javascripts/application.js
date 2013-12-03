@@ -12,4 +12,6 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require typist.jquery
+//= require prettify
 //= require_tree .
