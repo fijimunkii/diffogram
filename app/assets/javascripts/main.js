@@ -80,9 +80,10 @@ $(function() {
   }, 1000);
 
   //TODO make the clearing function only remove lines offscreen
-
   setInterval(function() {
-    $('#terminal').html('');
+    if ($('#terminal')[0].children.length > 20) {
+      $('#terminal').html('');
+    }
   }, 120000);
 
   $('#repo-form').on('submit', function(e) {
