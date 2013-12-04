@@ -67,9 +67,7 @@ $(function() {
     backgroundColor: '#000',
     textColor: 'rgb(89, 209, 33)',
     fontFamily: 'Delicious'
-  })
-  .typist('prompt')
-  .typist('speed', 'fast');
+  }).typist('speed', 'fast');
 
   getDiffs('fijimunkii/diffogram');
 
@@ -88,7 +86,6 @@ $(function() {
     }
   }, 1000);
 
-  //TODO make the clearing function only remove lines offscreen
   setInterval(function() {
     var children = $('#terminal')[0].children;
     var numChildren = children.length;
@@ -106,20 +103,25 @@ $(function() {
 
     $('#terminal').remove();
 
-    var term = $(<div>);
-    term.attr('id', 'terminal');
-    $('body').append(term);
+    var $term = $('<div>');
+    $term.attr('id', 'terminal');
+    $('.prettyprint').append($term);
 
-    term.typist({
+    var repo = $('#repo-input').val();
+
+    var loading = 'loading ' + repo;
+
+    $term.typist({
       height: '100%',
       backgroundColor: '#000',
       textColor: 'rgb(89, 209, 33)',
       fontFamily: 'Delicious'
     })
     .typist('prompt')
-    .typist('speed', 'fast');
+    .typist('type',loading)
+    .typist('prompt');
 
-    var repo = $('#repo-input').val();
+    numDiffs = 0;
 
     setInterval(function() {
       getDiffs(repo);
