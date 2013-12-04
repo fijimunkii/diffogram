@@ -71,12 +71,21 @@ $(function() {
   .typist('prompt')
   .typist('speed', 'fast');
 
+  getDiffs('fijimunkii/diffogram');
+
   setInterval(function() {
     window.scrollTo(0,document.body.scrollHeight);
   }, 100);
 
+  var numRows = 0;
+
   setInterval(function() {
-    prettyPrint();
+    var curNum = $('#terminal')[0].children.length;
+
+    if (curNum > numRows) {
+      numRows = curNum;
+      prettyPrint();
+    }
   }, 1000);
 
   //TODO make the clearing function only remove lines offscreen
@@ -86,8 +95,24 @@ $(function() {
     }
   }, 120000);
 
+
   $('#repo-form').on('submit', function(e) {
     e.preventDefault();
+
+    $('#terminal').remove();
+
+    var term = $(<div>);
+    term.attr('id', 'terminal');
+    $('body').append(term);
+
+    term.typist({
+      height: '100%',
+      backgroundColor: '#000',
+      textColor: 'rgb(89, 209, 33)',
+      fontFamily: 'Delicious'
+    })
+    .typist('prompt')
+    .typist('speed', 'fast');
 
     var repo = $('#repo-input').val();
 
