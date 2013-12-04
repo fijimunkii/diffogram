@@ -90,10 +90,15 @@ $(function() {
 
   //TODO make the clearing function only remove lines offscreen
   setInterval(function() {
-    if ($('#terminal')[0].children.length > 17) {
-      $('#terminal').html('');
+    var children = $('#terminal')[0].children;
+    var numChildren = children.length;
+    if (numChildren > 17) {
+      var childrenToRemove = numChildren - 17;
+      for (var i=0; i<childrenToRemove; i++) {
+        $(children[i]).remove();
+      }
     }
-  }, 120000);
+  }, 10000);
 
 
   $('#repo-form').on('submit', function(e) {
