@@ -18,12 +18,16 @@ p {
 	color: #fff;
 }
 
-#repo-form {
-  z-index:1;
-  position:absolute;
-  top: 10px;
-  right: 25%;
+#center {
+  width: 800px;
+  margin: 0 auto;
+  position: relative;
 }
+
+#repo-form {
+  margin: 10px;
+}
+
 input[name="repo-input"] {
   width: 625px;
   text-align: center;
