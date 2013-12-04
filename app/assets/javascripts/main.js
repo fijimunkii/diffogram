@@ -81,7 +81,7 @@ $(function() {
 
   //TODO make the clearing function only remove lines offscreen
   setInterval(function() {
-    if ($('#terminal')[0].children.length > 20) {
+    if ($('#terminal')[0].children.length > 17) {
       $('#terminal').html('');
     }
   }, 120000);
