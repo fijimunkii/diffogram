@@ -9,6 +9,8 @@ gem 'haml-rails'
 
 gem 'puma'
 
+gem 'newrelic_rpm'
+
 group :test, :development do
   gem 'rspec-rails'
   gem 'guard-rspec'
